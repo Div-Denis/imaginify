@@ -32,10 +32,15 @@ export async function POST(request: Request) {
       buyerId: metadata?.buyerId || "",
       createdAt: new Date(),
     };
-
-    const newTransaction = await createTransaction(transaction);
     
-    return NextResponse.json({ message: "OK", transaction: newTransaction });
+    try {
+      const newTransaction = await createTransaction(transaction);
+    
+      return NextResponse.json({ message: "OK", transaction: newTransaction });
+    } catch (error) {
+      return NextResponse.json({ message: "Transaction Error", error: error });
+    }
+    
   }
 
   return new Response("", { status: 200 });

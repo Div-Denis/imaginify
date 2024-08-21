@@ -73,7 +73,8 @@ export async function createTransaction(transaction: CreateTransactionParams){
         await updateCredits(transaction.buyerId, transaction.credits)
 
         return JSON.parse(JSON.stringify(newTransaction))
-    } catch (error) {
-        handleError(error)
+    } catch (error:any) {
+        // handleError(error)
+        throw new Error(`Transaction creation failed: ${error.message}`);
     }
 }
