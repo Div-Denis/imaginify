@@ -44,7 +44,7 @@ export const formSchema = z.object({
     publicId: z.string(),
 })
 
-const TransformationForm = ({ action, data = null, userId, type, creditBalance, config = null } : TransformationFormProps) => {
+const TransformationForm = ({ action, data = null, userId, type, createBalance, config = null } : TransformationFormProps) => {
     const transformationType = transformationTypes[type]
     const [image, setImage] = useState(data)
     const [newTransformation, setNewTransformation] = useState<Transformations | null>(null)
@@ -204,7 +204,8 @@ const TransformationForm = ({ action, data = null, userId, type, creditBalance, 
     <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
       {/* 添加信用额度的代码 */}
-      {creditBalance < Math.abs(creditFee) && <InsufficientCreditsModal />}
+      {/* creditBalance */}
+      {createBalance < Math.abs(creditFee) && <InsufficientCreditsModal />}
       <CustomField 
         control={form.control}
         name="title"

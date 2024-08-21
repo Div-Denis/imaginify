@@ -122,7 +122,7 @@ declare type CreateUserParams = {
     action: "Add" | "Update";
     userId: string;
     type: TransformationTypeKey;
-    creditBalance: number;
+    createBalance: number;
     data?: IImage | null;
     config?: Transformations | null;
   };
