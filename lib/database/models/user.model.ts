@@ -34,6 +34,7 @@ const UserSchema = new Schema({
         // 默认值
         default: 1,
     },
+    // 这写错了，应该是creditBalance,但不要影响已经创建的用户，所以不修改这里
     createBalance: {
         type: Number,
         default: 10,

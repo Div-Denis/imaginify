@@ -59,8 +59,10 @@ export async function POST(req: Request) {
 
   // CREATE
   if (eventType === "user.created") {
+    // 获取用户信息 evt.data是用户信息
     const { id, email_addresses, image_url, first_name, last_name, username } = evt.data;
 
+    // 创建用户信息
     const user = {
       clerkId: id,
       email: email_addresses[0].email_address,
@@ -70,17 +72,19 @@ export async function POST(req: Request) {
       photo: image_url,
     };
 
+    // 创建用户
     const newUser = await createUser(user);
 
-    // Set public metadata
+    // 更新用户信息
     if (newUser) {
       await clerkClient.users.updateUserMetadata(id, {
         publicMetadata: {
-          userId: newUser._id,
+          userId: newUser._id, // _id是mongoose的id
         },
       });
     }
-
+    
+    // 返回用户信息
     return NextResponse.json({ message: "OK", user: newUser });
   }
 

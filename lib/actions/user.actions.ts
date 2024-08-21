@@ -87,6 +87,31 @@ export async function deleteUser(clerkId: string) {
     }
 }
 
+// USE CREDITS
+export async function updateCredits(userId: string, creditFee: number) {
+    try {
+        // 连接到数据库
+        await connectToDatabase();
+
+        // 查找用户积分并更新用户积分,
+        // $inc 是增加的意思 
+        const updateUserCredits = await User.findOneAndUpdate(
+            {_id: userId},
+            // { $inc: { credits: creditsFee}}, 修改代码
+            // 这写错了，应该是creditBalance,但不要影响已经创建的用户，所以不修改这里
+            { $inc: { createBalance: creditFee}},
+            { new: true },
+        )
+
+        // 如果用户积分不存在, 抛出错误
+        if(!updateUserCredits) throw new Error("User credits update failed");
+
+        return JSON.parse(JSON.stringify(updateUserCredits));
+    } catch (error) {
+        handleError(error);
+    }
+}
+
 
 
 
